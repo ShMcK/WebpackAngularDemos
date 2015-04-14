@@ -1,0 +1,8 @@
+{
+  "esnext": true,
+  "node": true,
+  "globals": {
+    "angular": true,
+    "console": true
+  }
+}
