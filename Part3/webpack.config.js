@@ -31,7 +31,18 @@ module.exports = {
       {
         test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader?name=res/[name].[ext]?[hash]'
+      },
+      {
+        test: /\.html/,
+        loader: 'raw'
+      },
+      {
+        test: /\.json/,
+        loader: 'json'
       }
     ]
+  },
+  resolve: {
+    root: PATHS.app
   }
 };

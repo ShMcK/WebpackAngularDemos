@@ -1,0 +1,112 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  height: 60px;
+  padding: 12px;
+  background-color: #4fc1e9;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.main-nav--title {
+  margin: 0 0 10px 10px;
+}
+
+.main-nav--icon {
+  position: absolute;
+  margin: 5px;
+}
+
+.main-logo__link {
+  text-decoration: none;
+  color: white;
+}
+
+.menu-icon {
+  fill: white;
+}
+
+.main-nav--version {
+  font-size: 0.5em;
+  color: #F4F4F4;
+}
+
+.main-nav__link {
+  display: block;
+  padding: 0 12px;
+  border-radius: 2px;
+  font-size: 18px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  line-height: 36px;
+  text-decoration: none;
+}
+
+@media screen and (min-width: 1201px) {
+  .menubar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .menubar {
+    float: left;
+  }
+}
+
+.home .menubar {
+  display: none;
+}
+
+.main-logo {
+  float: left;
+}
+
+.main-logo__link {
+  display: block;
+  padding: 4px 6px;
+  border-radius: 2px;
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+
+.main-logo__link img {
+  display: block;
+  height: 28px;
+}
+
+.main-nav {
+  float: right;
+}
+
+.main-nav ul li {
+  float: left;
+}
+
+@media screen and (max-width: 630px) {
+  .main-nav--title {
+    font-size: 0.85em;
+  }
+  .main-nav--version {
+    display: none;
+  }
+  .main-nav--lap-and-up {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 631px) {
+  .main-nav--palm {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 1023px) {
+  .main-nav__link {
+    font-size: 14px;
+    font-size: 0.875rem;
+  }
+}

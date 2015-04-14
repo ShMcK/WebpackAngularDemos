@@ -27,6 +27,7 @@
     "jshint-loader": "^0.8.3",
     "ng-annotate-loader": "0.0.2",
     "node-sass": "^2.1.1",
+    "raw-loader": "^0.5.1",
     "sass-loader": "^0.6.0",
     "style-loader": "^0.10.1",
     "webpack": "^1.8.4",
