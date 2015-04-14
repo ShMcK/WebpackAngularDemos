@@ -44,5 +44,12 @@ module.exports = {
   },
   resolve: {
     root: PATHS.app
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      MODE: {
+        production: process.env.NODE_ENV === 'production'
+      }
+    })
+  ]
 };

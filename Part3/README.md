@@ -1,17 +1,19 @@
 Part 3
-# Webpack & Angular
+# Webpack Require @ Angular
 
-In Part 1 & Part 2 we prepared setting up the project, all for this moment. Let's take advantage of using Webpack & Angular for creating modular code.
+In [Part 1]() & [Part 2]() we prepared setting up the project, all for this moment. Let's take advantage of using Webpack & Angular for creating modular code.
 
 For some reason, Webpack & Angular reminds me of late 90s Acne commercials.
 
 > It keeps your code: clean, clear & under control
 
-What a terrible way to start a blog post, but I'll stick with it. No regrets.
+What a terrible way to start a blog post, but I'll stick with it. No regrets.  
 
-Let's look at some great features of using Webpack's require while making a navbar directive.
+## 6 Ways to use Webpack Require with Angular
 
-### require('module').name
+In this demo we'll keep it simple and make a navbar directive, looking at the different ways of using `require`. 
+
+### 1. require('module').name
 
 First of all, we'll need a module for handling our layout directives.
 
@@ -35,9 +37,11 @@ module.exports = angular.module('app', [
 ]);
 ```
 
-### Modular directive names
+### 2. Modular Directive Names
 
-Let's setup the navbar html.
+This makes it easy to change directive names in separate files with ease.
+
+Let's start by setting up the navbar template.
 
 /app/core/nav/nav.html
 
@@ -62,7 +66,7 @@ Let's setup the navbar html.
 </header>
 ```
 
-Styles: 
+Add some style: 
 
 /app/core/nav/nav.scss
 
@@ -81,9 +85,9 @@ Styles:
 }
 ```
 
-For the full `nav.scss` file, get it on [Github](). This is a short/ugly version.
+For the full `nav.scss` file, get it on [Github](https://github.com/ShMcK/WebpackAngularDemos/blob/master/Part3/app/core/nav/nav.scss). This is a short/ugly version.
 
-Next add the controller (using ES6 classes) and directive:
+Next add the controller (I used ES6 classes) and directive:
 
 /app/core/nav/nav.js
 
@@ -125,9 +129,9 @@ export default angular.module('app.layout', [])
   .directive('lumxNavbar', require('./nav/nav');
 ```
 
-This way name changes remain very flexible. 
+This way name changes remain very flexible even between files. 
 
-Add the directive and you should be able to see our working navbar.
+Add the directive to `index.html` and you should be able to see our working navbar.
 
 /app/index.html
 
@@ -139,7 +143,7 @@ Add the directive and you should be able to see our working navbar.
 
 
 
-### require(templates)
+### 3. require(templates)
 
 This `lumxNavbar` templateUrl doesn't allow us to move things around very much: `app/core/nav/nav.html`.
 
@@ -165,7 +169,7 @@ And now we can require html files using relative paths, this makes it much easie
 template: require('./nav.html')
 ```
 
-### require(json)
+### 4. require(json)
 
 By now you're probably getting the hang of loaders. We want to load some json, get a [`json-loader`](https://github.com/webpack/json-loader).
 
@@ -220,7 +224,7 @@ But what if we move the `nav` folder around? Wouldn't an absolute path to `app/i
 
 Luckily, with webpack we can use both.
 
-### require(absolute & || relative paths)
+### 5. require(absolute & || relative paths)
 
 A relative path points to files relative to the current directory.
 ```
@@ -260,8 +264,69 @@ class NavCtrl {
 }
 ```
 
-### If () { require('module') }
+### 6. if (condition) { require('module') }
 
+Say we want to run some angular optimizations, but only during production. Normally this would require a separate code base, but with Webpack we can nest modules within if statements.
 
+For example, with ES6 modules, we can only `import` files at the top of the file. They cannot be wrapped in any blocks. Webpack's require is much more flexible.
 
+/app/core/config/production.js
 
+```js
+export default (appModule) => {
+  appModule.config(($compileProvider, $httpProvider) => {
+    /* less watchers from console debugging: https://docs.angularjs.org/guide/production */
+    $compileProvider.debugInfoEnabled(false); 
+    /* process multiple responses @ same time: https://docs.angularjs.org/api/ng/provider/$httpProvider */
+    $httpProvider.useApplyAsync(true);
+  });
+};
+```
+
+Here we're loading the root appModule and providing it with some config optimizations.
+
+Let's put in an if statement to load this production.js if we are using production mode.
+
+/app/core/bootstrap.js
+```js
+require('./vendor.js')();
+var appModule = require('../index');
+if (MODE.production) { // jshint ignore:line
+  require('./config/production')(appModule);
+}
+angular.element(document).ready(() => {
+  angular.bootstrap(document, [appModule.name],
+    /* What is strictDI? https://docs.angularjs.org/api/ng/directive/ngApp */
+    MODE.production ? {strictDi: true} : {}
+  );
+});
+```
+
+Notice a few optimizations using MODE.production. But where does MODE come from? We can let webpack know.
+
+/app/webpack.config.js
+
+```js
+module.exports = {
+/* ... */
+plugins: [
+    new webpack.DefinePlugin({
+      MODE: {
+        production: process.env.NODE_ENV === 'production'
+      }
+    })
+  ]
+}
+```
+
+Production mode can now be called when declare the `NODE_ENV=production`.
+ 
+```shell
+NODE_ENV=production node node_modules/.bin/webpack-dev-server --content-base app
+```
+
+## Conclusion
+ 
+Webpack require gives you a lot more flexibility for building modular apps.
+  
+If you have any suggestions or other uses, post a comment below.
