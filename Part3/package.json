@@ -2,7 +2,7 @@
   "name": "WebpackAngular",
   "version": "0.2.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
     "start": "node node_modules/.bin/webpack-dev-server --content-base app --hot",
     "start-win": "node_modules\\.bin\\webpack-dev-server.cmd -—content-base app --hot"
@@ -25,6 +25,7 @@
     "imports-loader": "^0.6.3",
     "jshint": "^2.7.0",
     "jshint-loader": "^0.8.3",
+    "json-loader": "^0.5.1",
     "ng-annotate-loader": "0.0.2",
     "node-sass": "^2.1.1",
     "raw-loader": "^0.5.1",
