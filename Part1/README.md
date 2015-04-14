@@ -1,11 +1,15 @@
 Part 1
 # Getting Started with Webpack & Angular
 
-There are a lot of module loaders out there: 
+There are a lot of module loaders out there: Require.js, JSPM using System.js, to name a few. 
 
-We'll setup a project using Webpack & Angular, including ES6 transpiling & Sass loading. 
+Eventually the JavaScript community will come around and land on a winning module loader. My guess is Webpack, or something very similar. 
 
-Free free to load the [basic project from Github]().
+Go with Webpack. Webpack provides an elegant and multi-featured approach to module loading. It does everything I wanted it to do, and more. Really, a lot more. 
+  
+Let's try it out. We'll setup a project using Webpack & Angular, including ES6 transpiling & Sass loading. 
+
+Free free to load the [basic project from Github](https://github.com/ShMcK/WebpackAngularDemos/tree/master/Part1).
 
 ## File Setup
 
@@ -40,7 +44,6 @@ This should be the bare minimum required to check if everything is working.
 </head>
 <body>
 <p>Angular is working: {{1 + 1 === 2}}</p>
-
 <script src="bundle.js"></script>
 </body>
 </html>
@@ -78,21 +81,21 @@ Webpack will also require a [webpack configuration file](http://webpack.github.i
 'use strict';
 var webpack = require('webpack'),
 path = require('path');
-
 // PATHS
 var PATHS = {
   app: __dirname + '/app',
   bower: __dirname + '/app/bower_components'
 };
-
 module.exports = {
 	// config goes here
 };
 ```
 
-Webpack is a lot easier than it looks. You just need to provide an `entry` and an `output`. Notice `bundle.js` is the only script we needed to load in our `index.html`. Everything will go into that bundle. 
+Webpack is a lot easier than it looks. You just need to provide an `entry` and an `output`. 
 
-Later you can have multiple bundles for easy lazy-loading, but we're not there yet!
+Notice `bundle.js` is the only script we needed to load in our `index.html`. Everything will go into that bundle. 
+
+Later you can have multiple bundles for easy lazy-loading and code-splitting.
 
 /webpack.config.js
 
@@ -117,7 +120,7 @@ Let's build our bundle in the terminal.
 webpack
 ```
 
-This should create an `app/bundle.js` file. Check it out. It's mostly a bunch of `webpack__require` statements.
+This should create the `app/bundle.js` file. Check it out. It's mostly a bunch of `webpack__require` statements.
 
 ### Webpack-Dev-Server
 
@@ -146,7 +149,7 @@ entry: {
   }
 ```
 
-You may want to install webpack-dev-server globally. Otherwise you'll have to run it the long way: `node node_modules/.bin/webpack-dev-server --content-base app/ --hot`
+You may want to install `webpack-dev-server` globally. Otherwise you'll have to run it the long way: `node node_modules/.bin/webpack-dev-server --content-base app/ --hot`
 
 Run it.
 
@@ -157,7 +160,7 @@ webpack-dev-server --content-base app/ --hot
 
 Open up `http://localhost:8080/webpack-dev-server/`. 
 
-That's hot. Try it out. 
+It's hot. 
 
 /app/index.js
 
@@ -165,7 +168,9 @@ That's hot. Try it out.
 alert('hot-loaded!');
 ```
 
-It updates amazingly fast. Again, unlike Gulp or Grunt, Webpack only needs to re-compile the module that changed. This might not be important to you now, but as your project grows in size & complexity it becomes increasingly useful.
+It updates amazingly fast. Again, unlike Gulp or Grunt, Webpack only needs to re-compile the module that changed. 
+
+Targeted reloading might not be important to you now, but as your project grows in size & complexity it becomes increasingly useful.
 
 ### Quick Start
 
@@ -183,8 +188,6 @@ This can be accomplished with `package.json` [scripts](https://docs.npmjs.com/mi
 
 Now run `npm start`. Again, the app can be found at `localhost:8080/` by default, or `localhost:8080/webpack-dev-server` for the hot-module version.
 
-
-
 #### Bootstrap Angular
 
 I like to bootstrap Angular, rather than adding `ng-app="app"` into the html. 
@@ -194,13 +197,10 @@ I like to bootstrap Angular, rather than adding `ng-app="app"` into the html.
 ```js
 /*jshint browser:true */
 'use strict';
-
 // load Angular
 require('angular');
-
 // load the main app file
 var appModule = require('../index');
-
 // replaces ng-app="appName"
 angular.element(document).ready(function () {
   angular.bootstrap(document, [appModule.name], {
@@ -211,9 +211,9 @@ angular.element(document).ready(function () {
 
 Notice `require('angular')`? That replaces adding `<script src="bower_components/angular/angular.min.js">`. No need for that, this is a module system.
 
-Also note that `appModule.name` will be taken from index.js, whatever its name might be: `angular.module('THISNAMEHERE', [])`.
+Also note that `appModule.name` will be taken from `index.js`, whatever its name might be: `angular.module('THISNAMEHERE', [])`.
 
-Make the app file: index.js.
+Make the app file: `index.js`.
 
 /app/index.js
 ```js
@@ -236,7 +236,7 @@ Run the app (`npm start`). If all went well, running the app you should see: "An
 
 #### Add Dependencies
 
-Bootstrap will get messy if we keep loading all our dependencies in there. Let's load them seperately.
+Bootstrap will get messy if we keep loading all our dependencies in there. Let's load them in a separate file called `vendor.js`.
 
 /app/core/bootstrap.js
 
@@ -260,7 +260,7 @@ This file will get longer later.
 #### Styles
 Webpack doesn't just load JavaScript, it can load nearly anything we might need: styles, images, fonts, etc. 
 
-Webpack handles these different file formats using [loaders](http://webpack.github.io/docs/using-loaders.html). Here's [a list of available loaders](http://webpack.github.io/docs/list-of-loaders.html).
+It handles these different file formats using [loaders](http://webpack.github.io/docs/using-loaders.html). Here's [a list of available loaders](http://webpack.github.io/docs/list-of-loaders.html).
 
 Let's start with the Style, CSS, and Sass loaders and install them as dev-dependencies.
 
@@ -274,9 +274,7 @@ Webpack can use a Regex test to determine which loader to use. Add this to your 
 
 ```js
 module.exports = {
-
 /* context, entry, output */
-
  module: {
     loaders: [
       {
@@ -285,13 +283,10 @@ module.exports = {
       }
     ]
   }
-  
  };
 ```
 
-Loaders process from right to left. Meaning that if a `.scss` file is required as in the example, it will follow this order:
-
-sass loader => css loader => style loader
+Loaders process from right to left. Meaning that if a `.scss` file is required as in the example, it will follow this order: sass loader => css loader => style loader
 
 Run a quick test with a style sheet.
 
@@ -311,7 +306,6 @@ Require the file.
 module.exports = {
 	/* Styles */
   	require('../index.scss');
-  
   /* JS */
   require('angular');
  }
@@ -328,7 +322,7 @@ First we need some loaders. Install the dev-dependencies:
 
 `npm install -D jshint-loader babel-loader ng-annotate-loader`
 
-As before, we provide a loader object.
+As before, we provide a loader object with a pattern matching test case. We'll exclude compiling packages.
 
 /app/webpack.config.js
 
@@ -350,7 +344,6 @@ Let's use an ES6 example to make sure everything is working.
 
 ```js
 module.exports = angular.module('app', []);
-
 function printMessage (status='working') {		// default params
   let message = 'ES6';					            	// let
   console.log(`${message} is ${status}`);	    // template string
@@ -360,12 +353,11 @@ printMessage();
 
 Run the app, `npm start`, and you should see "ES6 is working" in the console.
 
-
 #### Removing JSHint Errors
 
 You probably saw some warnings (in yellow) when you ran the app.
 
-You might want to Remove these warnings from the console caused by jshint using a `.jshintrc` file. You can take [Jon Papa's recommended jshintrc](https://github.com/johnpapa/angular-styleguide#js-hint) or add the following:
+You might want to remove these warnings from the console caused by jshint using a `.jshintrc` file. You can take [Jon Papa's recommended .jshintrc](https://github.com/johnpapa/angular-styleguide#js-hint) or add the following:
 
 /.jshintrc
 
@@ -387,6 +379,8 @@ When I made my first webpack app, I was left wondering:
 
 > Where's the heavy lifting we need Grunt/Gulp for? 
 
-But it's all in the few lines of code in the webpack.config file. The app is built everytime you run `webpack`, and built and updated on the fly when you run the `webpack-dev-server`. Everything goes in the bundle.js. It fits my criteria for a good module loader: it's simple and it works.
+But it's all in the few lines of code in that webpack.config file. The app is built everytime you run `webpack`, and built and updated on the fly when you run the `webpack-dev-server`. 
+
+Everything goes in the bundle.js. It fits my criteria for a good module loader: it's simple and it works.
 
 Granted, this was a simple use case. We'll look at how Webpack handles more complicated cases in the [next post](), as we setup a project requiring [LumX](http://ui.lumapps.com/), a popular Material Design based CSS Framework for Angular.

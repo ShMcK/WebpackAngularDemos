@@ -1,13 +1,13 @@
 Part 3
 # Webpack Require @ Angular
 
-In [Part 1]() & [Part 2]() we prepared setting up the project, all for this moment. Let's take advantage of using Webpack & Angular for creating modular code.
-
 For some reason, Webpack & Angular reminds me of late 90s Acne commercials.
 
 > It keeps your code: clean, clear & under control
 
-What a terrible way to start a blog post, but I'll stick with it. No regrets.  
+What a terrible way to start a blog post, but I'll stick with it. No regrets.
+ 
+ In [Part 1]() & [Part 2]() we prepared setting up the project, all for this moment. Let's take advantage of using Webpack & Angular for creating modular code.
 
 ## 6 Ways to use Webpack Require with Angular
 
@@ -23,7 +23,7 @@ First of all, we'll need a module for handling our layout directives.
 export default angular.module('app.layout', [])
 ```
 
-We can simply require the layout by its location.name, allowing us to change module names at any time.
+We can simply require the layout by its `(path).name`, allowing us to change module names at any time.
 Just make the loaded module a dependency.
 
 /app/index.js
@@ -87,7 +87,7 @@ Add some style:
 
 For the full `nav.scss` file, get it on [Github](https://github.com/ShMcK/WebpackAngularDemos/blob/master/Part3/app/core/nav/nav.scss). This is a short/ugly version.
 
-Next add the controller (I used ES6 classes) and directive:
+Next add the directive & controller. Don't be confused, in this case my controller uses ES6 classes.
 
 /app/core/nav/nav.js
 
@@ -129,7 +129,7 @@ export default angular.module('app.layout', [])
   .directive('lumxNavbar', require('./nav/nav');
 ```
 
-This way name changes remain very flexible even between files. 
+This way, name changes remain very flexible even between files. 
 
 Add the directive to `index.html` and you should be able to see our working navbar.
 
@@ -141,13 +141,13 @@ Add the directive to `index.html` and you should be able to see our working navb
 <!-- ... -->
 ```
 
-
+Nice!
 
 ### 3. require(templates)
 
-This `lumxNavbar` templateUrl doesn't allow us to move things around very much: `app/core/nav/nav.html`.
+This `lumxNavbar` templateUrl doesn't allow us to move things around very much. And the path is already getting long: `app/core/nav/nav.html`.
 
-We can simplify this with the [`html-loader`](https://github.com/webpack/raw-loader). Install it as a dev dependency.
+We can simplify this with the [`raw-loader`](https://github.com/webpack/raw-loader). Install it as a dev dependency.
 
 `npm install -D raw-loader`
 
@@ -171,13 +171,13 @@ template: require('./nav.html')
 
 ### 4. require(json)
 
-By now you're probably getting the hang of loaders. We want to load some json, get a [`json-loader`](https://github.com/webpack/json-loader).
+By now you're probably getting the hang of loaders. Just to be sure, let's load some json, get the [`json-loader`](https://github.com/webpack/json-loader).
 
 `npm install -D json-loader`
 
 Add it to the `webpack.config.js`.
 
-/app/webpack.config.js
+//webpack.config.js
 
 ```js
 {
@@ -186,7 +186,7 @@ Add it to the `webpack.config.js`.
 }
 ```
 
-We can put all of our main data into an `index.json` file, so when we make navbar frequent navbar changes in the future, we won't have dive into `/app/core/nav/nav`.
+We can put all of our main data into an `index.json` file, so when we make frequent navbar changes in the future, we won't have to dive into the nested `/app/core/nav/nav`.
 
 /app/index.json
 
@@ -237,9 +237,11 @@ parent.js
 - At the same level `./file.js`
 - Nested `./folder/child.js`
 
-But if you want to move the `folder` or `child.js` around, this path will break. Sometimes it's better to use an absolute path.
+But if you want to move the `folder` or `child.js` around, the path will break. 
 
-To do this with Webpack, we must first tell `webpack.config` our absolute root.
+Sometimes a relative path is best, but other times it's better to use an absolute path.
+
+To use absolute paths with Webpack, we must first tell `webpack.config` our absolute root.
 
 /app/webpack.config.js
 
@@ -270,6 +272,8 @@ Say we want to run some angular optimizations, but only during production. Norma
 
 For example, with ES6 modules, we can only `import` files at the top of the file. They cannot be wrapped in any blocks. Webpack's require is much more flexible.
 
+The goal: if (mode === production) { load production optimizations }.
+
 /app/core/config/production.js
 
 ```js
@@ -283,9 +287,9 @@ export default (appModule) => {
 };
 ```
 
-Here we're loading the root appModule and providing it with some config optimizations.
+Here we're loading the root `appModule` and providing it with some config optimizations.
 
-Let's put in an if statement to load this production.js if we are using production mode.
+Let's put in an if(){} statement to load `production.js` only when we are using production mode.
 
 /app/core/bootstrap.js
 ```js
@@ -295,10 +299,9 @@ if (MODE.production) { // jshint ignore:line
   require('./config/production')(appModule);
 }
 angular.element(document).ready(() => {
-  angular.bootstrap(document, [appModule.name],
-    /* What is strictDI? https://docs.angularjs.org/api/ng/directive/ngApp */
-    MODE.production ? {strictDi: true} : {}
-  );
+  angular.bootstrap(document, [appModule.name], {
+    //strictDi: true
+  });
 });
 ```
 
@@ -325,8 +328,10 @@ Production mode can now be called when declare the `NODE_ENV=production`.
 NODE_ENV=production node node_modules/.bin/webpack-dev-server --content-base app
 ```
 
+This method can also be used for loading `angular-mocks` during `MODE.test`, etc.
+
 ## Conclusion
  
-Webpack require gives you a lot more flexibility for building modular apps.
+Webpack's require gives you a lot more flexibility for building modular apps.
   
 If you have any suggestions or other uses, post a comment below.
