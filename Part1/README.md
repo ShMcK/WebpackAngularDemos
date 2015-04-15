@@ -1,5 +1,5 @@
-Part 1
-# Getting Started with Webpack & Angular
+##### Part 1
+# Getting Started
 
 There are a lot of module loaders out there: Require.js, JSPM using System.js, to name a few. 
 
@@ -7,7 +7,7 @@ Eventually the JavaScript community will come around and land on a winning modul
 
 Go with Webpack. Webpack provides an elegant and multi-featured approach to module loading. It does everything I wanted it to do, and more. Really, a lot more. 
   
-Let's try it out. We'll setup a project using Webpack & Angular, including ES6 transpiling & Sass loading. 
+Let's try it out. We'll setup a project using Webpack, including ES6 transpiling & Sass loading. 
 
 Free free to load the [basic project from Github](https://github.com/ShMcK/WebpackAngularDemos/tree/master/Part1).
 
@@ -75,7 +75,7 @@ npm install -D webpack
 
 Webpack will also require a [webpack configuration file](http://webpack.github.io/docs/configuration.html): `webpack.config.js`. Make the file and add the following:
 
-/app/webpack.config.js
+/webpack.config.js
 
 ```js
 'use strict';
@@ -223,7 +223,7 @@ module.exports = angular.module('app', []);
 
 Finally, let's make `bootstrap.js` our new Webpack entry point.
 
-/app/webpack.config.js
+/webpack.config.js
 
 ```js
 entry: {
@@ -270,7 +270,7 @@ npm install -D style-loader css-loader sass-loader`
 
 Webpack can use a Regex test to determine which loader to use. Add this to your webpack.config.js file.
 
-/app/webpack.config.js
+/webpack.config.js
 
 ```js
 module.exports = {
@@ -324,7 +324,7 @@ First we need some loaders. Install the dev-dependencies:
 
 As before, we provide a loader object with a pattern matching test case. We'll exclude compiling packages.
 
-/app/webpack.config.js
+/webpack.config.js
 
 ```js
 loaders: [
@@ -344,9 +344,12 @@ Let's use an ES6 example to make sure everything is working.
 
 ```js
 module.exports = angular.module('app', []);
-function printMessage (status='working') {		// default params
-  let message = 'ES6';					            	// let
-  console.log(`${message} is ${status}`);	    // template string
+// default params
+function printMessage (status='working') {		
+// let
+  let message = 'ES6';					
+// template string       	
+  console.log(`${message} is ${status}`);	
 }
 printMessage();
 ```
@@ -383,4 +386,4 @@ But it's all in the few lines of code in that webpack.config file. The app is bu
 
 Everything goes in the bundle.js. It fits my criteria for a good module loader: it's simple and it works.
 
-Granted, this was a simple use case. We'll look at how Webpack handles more complicated cases in the [next post](), as we setup a project requiring [LumX](http://ui.lumapps.com/), a popular Material Design based CSS Framework for Angular.
+Granted, this was a simple use case. We'll look at how Webpack handles more complicated cases in the [next post](http://shmck.com/webpack-angular-part-2), as we setup a project requiring [LumX](http://ui.lumapps.com/), a popular Material Design based CSS Framework for Angular.

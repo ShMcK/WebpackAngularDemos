@@ -1,5 +1,5 @@
-Part 3
-# Webpack Require @ Angular
+#####Part 3
+# 6 Ways to use Webpack Require with Angular
 
 For some reason, Webpack & Angular reminds me of late 90s Acne commercials.
 
@@ -7,9 +7,9 @@ For some reason, Webpack & Angular reminds me of late 90s Acne commercials.
 
 What a terrible way to start a blog post, but I'll stick with it. No regrets.
  
- In [Part 1]() & [Part 2]() we prepared setting up the project, all for this moment. Let's take advantage of using Webpack & Angular for creating modular code.
+ In [Part 1](http://shmck.com/webpack-angular-part-1) & [Part 2](http://shmck.com/webpack-angular-part-2) we prepared setting up the project, all for this moment. Let's take advantage of using Webpack & Angular for creating modular code.
 
-## 6 Ways to use Webpack Require with Angular
+## What is Required
 
 In this demo we'll keep it simple and make a navbar directive, looking at the different ways of using `require`. 
 
@@ -229,9 +229,9 @@ Luckily, with webpack we can use both.
 A relative path points to files relative to the current directory.
 ```
 parent.js
-├── file.js
-│   ├── folder
-│   │       └──child.js
+└── file.js
+    └── folder
+            └──child.js
 ```
 - Parent `../parent.js`
 - At the same level `./file.js`
@@ -333,5 +333,7 @@ This method can also be used for loading `angular-mocks` during `MODE.test`, etc
 ## Conclusion
  
 Webpack's require gives you a lot more flexibility for building modular apps.
+
+Again, check out the codebase on [Github](https://github.com/ShMcK/WebpackAngularDemos).
   
 If you have any suggestions or other uses, post a comment below.

@@ -1,7 +1,7 @@
-Part 2
-#Complex Webpack Dependencies with LumX
+#####Part 2
+#Complex Webpack Dependencies
 
-If you're unfamiliar with Webpack, you might want to checkout [Part 1]() of this Article on setting up a project with Webpack. This demo will continue from the previous article's [code-base](https://github.com/ShMcK/WebpackAngularDemos/tree/master/Part1).
+If you're unfamiliar with Webpack, you might want to checkout [Part 1](http://shmck.com/webpack-angular-part-1) of this Article on setting up a project with Webpack. This demo will continue from the previous article's [code-base](https://github.com/ShMcK/WebpackAngularDemos/tree/master/Part1).
 
 In this article we'll look at loading different types of dependencies: scripts, styles, fonts, etc. using Webpack. We'll also compare and contrast loading modules from NPM & Bower.
 
@@ -183,7 +183,7 @@ Note: another possible suggestion would be to load Lumx as an NPM module using [
 
 LumX depends on a Bourbon Sass mixins which also have an NPM equivalent: `node-bourbon`. However, LumX requires them using a relative path within the `bower_components` folder, so it's better just to keep the Bower Bourbon file.
 
-Style sheets can be loaded using `require('.path/to/_lumx.scss')`, as in the [previous article]() but due to the cascading nature of stylesheets, it's likely better to keep them in a root `index.scss` file. Simply import the Lumx styles.
+Style sheets can be loaded using `require('.path/to/_lumx.scss')`, as in the [previous article](http://shmck.com/webpack-angular-part-1) but due to the cascading nature of stylesheets, it's likely better to keep them in a root `index.scss` file. Simply import the Lumx styles.
 
 /app/index.scss
 
@@ -232,4 +232,4 @@ We saw how Webpack can load different file formats, as well as handle different 
 
 Checkout [Github](https://github.com/ShMcK/WebpackAngularDemos/tree/master/Part2) for the full codebase.
 
-In [Part 3]() we'll finally be able to take advantage of using Webpack with Angular for creating incredibly modular code.
+In [Part 3](http://shmck.com/webpack-angular-part-3) we'll finally be able to take advantage of using Webpack with Angular for creating incredibly modular code.
