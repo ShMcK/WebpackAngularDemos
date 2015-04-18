@@ -190,6 +190,10 @@ Now run `npm start`. Again, the app can be found at `localhost:8080/` by default
 
 #### Bootstrap Angular
 
+Install angular.
+
+`npm install angular --save`
+
 I like to bootstrap Angular, rather than adding `ng-app="app"` into the html. 
 
 /app/core/bootstrap.js

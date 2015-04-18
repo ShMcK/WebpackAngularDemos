@@ -1,6 +1,5 @@
 module.exports = function () {
   /* Styles */
-  require('node-bourbon');
   require('../index.scss');
   require('../../node_modules/mdi/scss/materialdesignicons.scss');
 
