@@ -115,7 +115,7 @@ export default () => {
   return {
     controller: NavCtrl,
     controllerAs: 'nav',
-    templateUrl: 'app/core/nav/nav.html'
+    templateUrl: './core/nav/nav.html'
   };
 };
 ```
@@ -126,7 +126,7 @@ Notice the directive was never named. You really only need to name it once, on i
 
 ```js
 export default angular.module('app.layout', [])
-  .directive('lumxNavbar', require('./nav/nav');
+  .directive('lumxNavbar', require('./nav/nav'));
 ```
 
 This way, name changes remain very flexible even between files. 
@@ -165,7 +165,7 @@ And now we can require html files using relative paths, this makes it much easie
 /app/core/nav/nav.js
 
 ```js
-/* old templateUrl: 'app/core/nav/nav.html' */
+/* old templateUrl: './core/nav/nav.html' */
 template: require('./nav.html')
 ```
 
