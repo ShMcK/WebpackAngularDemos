@@ -10,6 +10,6 @@
     "tests"
   ],
   "dependencies": {
-    "lumx": "~0.3.25"
+    "lumx": "~0.3.31"
   }
 }
