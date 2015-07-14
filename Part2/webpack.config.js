@@ -1,37 +1,33 @@
 'use strict';
-var webpack = require('webpack'),
-  path = require('path');
 
-// PATHS
-var PATHS = {
-  app: __dirname + '/app',
-  bower: __dirname + '/app/bower_components'
-};
+var webpack = require('webpack'),
+  path = require('path'),
+  APP = __dirname + '/app';
 
 module.exports = {
-  context: PATHS.app,
+  context: APP,
   entry: {
     app: ['webpack/hot/dev-server', './core/bootstrap.js']
   },
   output: {
-    path: PATHS.app,
+    path: APP,
     filename: 'bundle.js'
   },
   module: {
     loaders: [
       {
         test: /\.scss$/,
-        loader: 'style!css!sass'
+        loader: "style!css!sass"
       },
       {
         test: /\.js$/,
         loader: 'ng-annotate!babel!jshint',
         exclude: /node_modules|bower_components/
       },
-      {
-        test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=res/[name].[ext]?[hash]'
-      }
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&minetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=image/svg+xml" }
     ]
   }
 };
