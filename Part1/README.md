@@ -1,4 +1,7 @@
 ##### Part 1
+
+<div class="update">Updated July 14th, 2015.</div>
+
 # Getting Started
 
 There are a lot of module loaders out there: Require.js, JSPM using System.js, to name a few. 
@@ -7,7 +10,9 @@ Eventually the JavaScript community will come around and land on a winning modul
 
 Go with Webpack. Webpack provides an elegant and multi-featured approach to module loading. It does everything I wanted it to do, and more. Really, a lot more. 
   
-Let's try it out. We'll setup a project using Webpack, including ES6 transpiling & Sass loading. 
+Let's try it out. We'll setup a project using Webpack, including ES6 transpiling & Sass loading. In this example, we'll setup an Angular based project using Webpack.
+
+<center>![Webpack & Angular](https://shmck.herokuapp.com/content/images/2015/04/webpackAngular.png)</center>
 
 Free free to load the [basic project from Github](https://github.com/ShMcK/WebpackAngularDemos/tree/master/Part1).
 
@@ -18,7 +23,6 @@ File Structure:
 ```
 root
 ├── app
-│   ├── bower_components
 │   ├── core
 │   │       ├──bootstrap.js
 │   │       └──vendor.js
@@ -81,11 +85,9 @@ Webpack will also require a [webpack configuration file](http://webpack.github.i
 'use strict';
 var webpack = require('webpack'),
 path = require('path');
-// PATHS
-var PATHS = {
-  app: __dirname + '/app',
-  bower: __dirname + '/app/bower_components'
-};
+
+var APP = __dirname + '/app';
+
 module.exports = {
 	// config goes here
 };
@@ -101,12 +103,12 @@ Later you can have multiple bundles for easy lazy-loading and code-splitting.
 
 ```js
 module.exports = {
-	context: PATHS.app,
+	context: APP,
 	 entry: {
    		app: './index.js'
 	},
 	output: {
-		path: PATHS.app,
+		path: APP,
 		filename: 'bundle.js'
 	}
 }
@@ -190,10 +192,6 @@ Now run `npm start`. Again, the app can be found at `localhost:8080/` by default
 
 #### Bootstrap Angular
 
-Install angular.
-
-`npm install angular --save`
-
 I like to bootstrap Angular, rather than adding `ng-app="app"` into the html. 
 
 /app/core/bootstrap.js
@@ -239,6 +237,10 @@ Run the app (`npm start`). If all went well, running the app you should see: "An
 
 
 #### Add Dependencies
+
+Install angular.
+
+`npm install --save angular`
 
 Bootstrap will get messy if we keep loading all our dependencies in there. Let's load them in a separate file called `vendor.js`.
 

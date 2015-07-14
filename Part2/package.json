@@ -7,15 +7,15 @@
     "start": "node node_modules/.bin/webpack-dev-server --content-base app --hot",
     "start-win": "node_modules\\.bin\\webpack-dev-server.cmd -—content-base app --hot"
   },
-  "author": "",
+  "author": "Shawn McKay <me@shmck.com",
   "license": "ISC",
   "dependencies": {
     "angular": "1.4.2",
     "bourbon": "^4.2.3",
     "jquery": "2.1.4",
-    "mdi": "1.0.8-beta",
     "moment": "2.10.3",
     "node-lumx": "^1.0.0",
+    "node-mdi": "^1.0.0",
     "velocity-animate": "1.2.2"
   },
   "devDependencies": {
