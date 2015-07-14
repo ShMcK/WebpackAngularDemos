@@ -24,10 +24,10 @@ module.exports = {
         loader: 'ng-annotate!babel!jshint',
         exclude: /node_modules|bower_components/
       },
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&minetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,    loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=image/svg+xml" }
+      {
+        test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader?name=res/[name].[ext]?[hash]'
+      }
     ]
   }
 };

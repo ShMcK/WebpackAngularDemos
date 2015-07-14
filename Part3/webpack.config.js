@@ -1,20 +1,15 @@
 'use strict';
 var webpack = require('webpack'),
-  path = require('path');
-
-// PATHS
-var PATHS = {
-  app: __dirname + '/app',
-  bower: __dirname + '/app/bower_components'
-};
+  path = require('path'),
+  APP = __dirname + '/app';
 
 module.exports = {
-  context: PATHS.app,
+  context: APP,
   entry: {
     app: ['webpack/hot/dev-server', './core/bootstrap.js']
   },
   output: {
-    path: PATHS.app,
+    path: APP,
     filename: 'bundle.js'
   },
   module: {
@@ -43,7 +38,7 @@ module.exports = {
     ]
   },
   resolve: {
-    root: PATHS.app
+    root: APP
   },
   plugins: [
     new webpack.DefinePlugin({
