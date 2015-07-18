@@ -19,13 +19,17 @@ module.exports = {
         loader: 'style!css!sass'
       },
       {
+        test: /\.css$/,
+        loader: "style!css"
+      },
+      {
         test: /\.js$/,
         loader: 'ng-annotate!babel!jshint',
         exclude: /node_modules|bower_components/
       },
       {
-        test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=res/[name].[ext]?[hash]'
+        test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
+        loader : 'file-loader?name=res/[name].[ext]?[hash]'
       },
       {
         test: /\.html/,
