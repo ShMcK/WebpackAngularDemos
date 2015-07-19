@@ -15,7 +15,7 @@
     "jquery": "2.1.4",
     "moment": "2.10.3",
     "node-lumx": "^1.0.0",
-    "node-mdi": "^1.0.0",
+    "mdi": "1.0.8-beta",
     "velocity-animate": "1.2.2"
   },
   "devDependencies": {
