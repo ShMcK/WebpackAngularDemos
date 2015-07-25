@@ -45,6 +45,7 @@ module.exports = {
     root: APP
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       MODE: {
         production: process.env.NODE_ENV === 'production'

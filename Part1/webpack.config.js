@@ -29,5 +29,8 @@ module.exports = {
         exclude: /node_modules|bower_components/
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };

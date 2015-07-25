@@ -33,5 +33,8 @@ module.exports = {
         loader : 'file-loader?name=res/[name].[ext]?[hash]'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
