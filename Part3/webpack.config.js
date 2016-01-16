@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'ng-annotate!babel!jshint',
+        loader: 'ng-annotate!babel?presets[]=es2015!jshint',
         exclude: /node_modules|bower_components/
       },
       {
