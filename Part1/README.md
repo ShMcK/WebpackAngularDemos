@@ -1,15 +1,15 @@
 ##### Part 1
 
-<div class="update">Updated July 14th, 2015.</div>
+<div class="update">Updated Jan 16th, 2016.</div>
 
 # Getting Started
 
-There are a lot of module loaders out there: Require.js, JSPM using System.js, to name a few. 
+There are a lot of module loaders out there: Require.js, JSPM using System.js, to name a few.
 
-Eventually the JavaScript community will come around and land on a winning module loader. My guess is Webpack, or something very similar. 
+Eventually the JavaScript community will come around and land on a winning module loader. My guess is Webpack, or something very similar.
 
-Go with Webpack. Webpack provides an elegant and multi-featured approach to module loading. It does everything I wanted it to do, and more. Really, a lot more. 
-  
+Go with Webpack. Webpack provides an elegant and multi-featured approach to module loading. It does everything I wanted it to do, and more. Really, a lot more.
+
 Let's try it out. We'll setup a project using Webpack, including ES6 transpiling & Sass loading. In this example, we'll setup an Angular based project using Webpack.
 
 <center>![Webpack & Angular](https://shmck.herokuapp.com/content/images/2015/04/webpackAngular.png)</center>
@@ -93,9 +93,9 @@ module.exports = {
 };
 ```
 
-Webpack is a lot easier than it looks. You just need to provide an `entry` and an `output`. 
+Webpack is a lot easier than it looks. You just need to provide an `entry` and an `output`.
 
-Notice `bundle.js` is the only script we needed to load in our `index.html`. Everything will go into that bundle. 
+Notice `bundle.js` is the only script we needed to load in our `index.html`. Everything will go into that bundle.
 
 Later you can have multiple bundles for easy lazy-loading and code-splitting.
 
@@ -114,7 +114,7 @@ module.exports = {
 }
 ```
 
-We now have a module loader. 
+We now have a module loader.
 
 Let's build our bundle in the terminal.
 
@@ -126,9 +126,9 @@ This should create the `app/bundle.js` file. Check it out. It's mostly a bunch o
 
 ### Webpack-Dev-Server
 
-[Webpack-dev-server](http://webpack.github.io/docs/webpack-dev-server.html) is a quick and easy Node.js/Express/Socket.io app that creates your `bundle.js` file on the fly and reloads it on changes. 
+[Webpack-dev-server](http://webpack.github.io/docs/webpack-dev-server.html) is a quick and easy Node.js/Express/Socket.io app that creates your `bundle.js` file on the fly and reloads it on changes.
 
-Install it as a dev-dependency. 
+Install it as a dev-dependency.
 
 ```shell
 npm install -D webpack-dev-server
@@ -160,9 +160,9 @@ npm install -g webpack-dev-server
 webpack-dev-server --content-base app/ --hot
 ```
 
-Open up `http://localhost:8080/webpack-dev-server/`. 
+Open up `http://localhost:8080/webpack-dev-server/`.
 
-It's hot. 
+It's hot.
 
 /app/index.js
 
@@ -170,7 +170,7 @@ It's hot.
 alert('hot-loaded!');
 ```
 
-It updates amazingly fast. Again, unlike Gulp or Grunt, Webpack only needs to re-compile the module that changed. 
+It updates amazingly fast. Again, unlike Gulp or Grunt, Webpack only needs to re-compile the module that changed.
 
 Targeted reloading might not be important to you now, but as your project grows in size & complexity it becomes increasingly useful.
 
@@ -178,9 +178,9 @@ Targeted reloading might not be important to you now, but as your project grows 
 
 If you're used to using Gulp or Grunt, you probably like the time saving `gulp serve`, `grunt serve` shortcuts for running your app.
 
-This can be accomplished with `package.json` [scripts](https://docs.npmjs.com/misc/scripts). 
+This can be accomplished with `package.json` [scripts](https://docs.npmjs.com/misc/scripts).
 
-/package.json 
+/package.json
 
 ```json
 "scripts": {
@@ -192,7 +192,7 @@ Now run `npm start`. Again, the app can be found at `localhost:8080/` by default
 
 #### Bootstrap Angular
 
-I like to bootstrap Angular, rather than adding `ng-app="app"` into the html. 
+I like to bootstrap Angular, rather than adding `ng-app="app"` into the html.
 
 /app/core/bootstrap.js
 
@@ -247,7 +247,7 @@ Bootstrap will get messy if we keep loading all our dependencies in there. Let's
 /app/core/bootstrap.js
 
 ```js
-require(./vendor')();   				 // run an empty function 
+require(./vendor')();   				 // run an empty function
 var appModule = require('../index');
 ```
 
@@ -264,7 +264,7 @@ This file will get longer later.
 
 
 #### Styles
-Webpack doesn't just load JavaScript, it can load nearly anything we might need: styles, images, fonts, etc. 
+Webpack doesn't just load JavaScript, it can load nearly anything we might need: styles, images, fonts, etc.
 
 It handles these different file formats using [loaders](http://webpack.github.io/docs/using-loaders.html). Here's [a list of available loaders](http://webpack.github.io/docs/list-of-loaders.html).
 
@@ -317,16 +317,16 @@ module.exports = {
  }
 ```
 
-Take a look, `npm start`, the background should now be red. 
+Take a look, `npm start`, the background should now be red.
 
 
 #### ES6 Loaders
 
-Webpack makes it easy to use compiled languages like ES6, TypeScript, CoffeeScript, etc. Let's write our app in ES6 and compile it to ES5/ES3. 
+Webpack makes it easy to use compiled languages like ES6, TypeScript, CoffeeScript, etc. Let's write our app in ES6 and compile it to ES5/ES3.
 
 First we need some loaders. Install the dev-dependencies:
 
-`npm install -D jshint-loader babel-loader ng-annotate-loader`
+`npm install -D jshint-loader babel-loader ng-annotate-loader babel-preset-es2015`
 
 As before, we provide a loader object with a pattern matching test case. We'll exclude compiling packages.
 
@@ -336,13 +336,15 @@ As before, we provide a loader object with a pattern matching test case. We'll e
 loaders: [
 {
 	test: /\.js$/,
-   loader: 'ng-annotate!babel!jshint',
+   loader: 'ng-annotate!babel?presets[]=es2015!jshint',
    exclude: /node_modules|bower_components/
 }
 ]
 ```
 
 Webpack will take any required `.js` files, and run them right to left: jshint => babel => ng-annotate.
+
+In Babel you must now specify the preset you are using, in this case 'es2015'. This allows Babel to be much more flexible with future js versions.
 
 Let's use an ES6 example to make sure everything is working.
 
@@ -355,7 +357,7 @@ function printMessage (status='working') {
 // let
   let message = 'ES6';					
 // template string       	
-  console.log(`${message} is ${status}`);	
+  console.log(`${message} is ${status}`);
 }
 printMessage();
 ```
@@ -386,9 +388,9 @@ When I made my first webpack app, I was left wondering:
 
 > What happened to the build stage?
 
-> Where's the heavy lifting we need Grunt/Gulp for? 
+> Where's the heavy lifting we need Grunt/Gulp for?
 
-But it's all in the few lines of code in that webpack.config file. The app is built everytime you run `webpack`, and built and updated on the fly when you run the `webpack-dev-server`. 
+But it's all in the few lines of code in that webpack.config file. The app is built everytime you run `webpack`, and built and updated on the fly when you run the `webpack-dev-server`.
 
 Everything goes in the bundle.js. It fits my criteria for a good module loader: it's simple and it works.
 
